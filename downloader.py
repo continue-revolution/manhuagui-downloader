@@ -77,12 +77,11 @@ class MangaDownloader:
             pgUrl = 'https://i.hamreus.com' + path + filename
             print(os.path.basename(pgUrl))
             self.downloadPg(pgUrl, e, m, localPath)
-            time.sleep(0.5)  # 0.5s interval
+            time.sleep(0.25)  # 0.5s interval
         return True
 
     def downloadPg(self, url, e, m, localPath):
-        # repeat 10 times
-        for i in range(10):
+        while True:
             try:
                 res = requests.get(url, params={'e': e, 'm': m}, headers=header, timeout=10)
                 res.raise_for_status()
@@ -99,5 +98,4 @@ class MangaDownloader:
             # transfer to jpg
             Image.open(filename).save(filename, 'jpeg')
             return
-        print('超过重复次数 跳过此章')
 
